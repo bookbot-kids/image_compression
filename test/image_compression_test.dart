@@ -35,4 +35,14 @@ void main() {
 
     expect(true, true);
   });
+
+  test('test png', () async {
+    await ImageCompression.shared.process(
+      testDir,
+      'test.png',
+      '$testDir/output',
+    );
+
+    expect(true, true);
+  });
 }

@@ -1,13 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:image_compression/configs.dart';
 import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 import 'package:image/image.dart' as img;
 
 class FileUtil {
-  static final _maxSize = 2048.0;
-
   /// Resize image if the image size > maxSize. Only resize JPEG, PNG image
   /// Return original path if size <= maxSize, otherwise return new path
   static Future<String> resizeIfNeeded(
@@ -25,9 +24,10 @@ class FileUtil {
     var bytes = file.readAsBytesSync();
     var decodedImage = await decodeImageFromList(bytes);
     print('image size ${decodedImage.width}, ${decodedImage.height}');
-    if (decodedImage.width > _maxSize || decodedImage.height > _maxSize) {
-      final widthRatio = _maxSize / decodedImage.width;
-      final heightRatio = _maxSize / decodedImage.height;
+    if (decodedImage.width > Configs.MaxSize ||
+        decodedImage.height > Configs.MaxSize) {
+      final widthRatio = Configs.MaxSize / decodedImage.width;
+      final heightRatio = Configs.MaxSize / decodedImage.height;
       final ratio = min(widthRatio, heightRatio);
       var originImage = img.decodeImage(bytes);
       final resizedPath =

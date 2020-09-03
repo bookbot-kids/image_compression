@@ -3,6 +3,7 @@ import 'package:process_run/process_run.dart';
 import 'compressor.dart';
 import 'package:path/path.dart' as p;
 
+/// Compressor that compress svg image.by using [svgcleaner](https://github.com/RazrFalcon/svgcleaner)
 class SvgCompressor extends Compressor {
   @override
   Future compress(String inputPath, String outputDir) async {

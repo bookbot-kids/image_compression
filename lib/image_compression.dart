@@ -27,15 +27,24 @@ class ImageCompression {
     if (UniversalPlatform.isMacOS) {
       // install imagemagick
       //await run('brew', ['install', 'imagemagick'], verbose: true);
+
       // copy svgcleaner into executeable dir
-      await FileUtil.copyFile('resources/svgcleaner-cli',
+      await FileUtil.copyFile('binaries/svgcleaner-cli',
           p.join(await Compressor.processDir, 'svgcleaner-cli'));
+
+      // copy pngquant into executeable dir
+      await FileUtil.copyFile(
+          'binaries/pngquant', p.join(await Compressor.processDir, 'pngquant'));
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
 
       // copy svgcleaner into executeable dir
-      await FileUtil.copyFile('resources/svgcleaner_win32_0.9.5.exe',
+      await FileUtil.copyFile('binaries/svgcleaner_win32_0.9.5.exe',
           p.join(await Compressor.processDir, 'svgcleaner_win32_0.9.5.exe'));
+
+      // copy pngquant into executeable dir
+      await FileUtil.copyFile('binaries/pngquant.exe',
+          p.join(await Compressor.processDir, 'pngquant.exe'));
     }
   }
 
