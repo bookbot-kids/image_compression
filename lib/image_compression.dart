@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:image_compression/compressors/compressor.dart';
 import 'package:image_compression/image_types.dart';
-import 'package:image_compression/image_util.dart';
-import 'package:process_run/process_run.dart';
+import 'package:image_compression/file_util.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_platform/universal_platform.dart';
 
 class ImageCompression {
   ImageCompression._privateConstructore();
+
   static ImageCompression shared = ImageCompression._privateConstructore();
+
   static const MethodChannel _channel = MethodChannel('image_compression');
 
   final Map<ImageType, Compressor> _compressors = {
@@ -24,9 +25,17 @@ class ImageCompression {
 
   Future<void> config() async {
     if (UniversalPlatform.isMacOS) {
-      await run('brew', ['install', 'imagemagick'], verbose: true);
+      // install imagemagick
+      //await run('brew', ['install', 'imagemagick'], verbose: true);
+      // copy svgcleaner into executeable dir
+      await FileUtil.copyFile('resources/svgcleaner-cli',
+          p.join(await Compressor.processDir, 'svgcleaner-cli'));
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
+
+      // copy svgcleaner into executeable dir
+      await FileUtil.copyFile('resources/svgcleaner_win32_0.9.5.exe',
+          p.join(await Compressor.processDir, 'svgcleaner_win32_0.9.5.exe'));
     }
   }
 
@@ -39,7 +48,7 @@ class ImageCompression {
       String inputDir, String fileName, String outputDir) async {
     var file = p.join(inputDir, fileName);
     var fileExtension = p.extension(file).toLowerCase();
-    var inputFile = await ImageUtil.resizeIfNeeded(inputDir, file);
+    var inputFile = await FileUtil.resizeIfNeeded(inputDir, file);
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
     print('process [$inputFile] with [$compressor]');
