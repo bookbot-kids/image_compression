@@ -6,6 +6,8 @@ import 'package:uuid/uuid.dart';
 import 'compressor.dart';
 
 /// Compressor that compress png image.by using [pngquant](https://pngquant.org/) and [zopfli](https://github.com/google/zopfli)
+///
+/// On windows, the binary is downloaded from [zopflipng-bin](https://github.com/imagemin/zopflipng-bin)
 class PngCompressor extends Compressor {
   @override
   Future<dynamic> compress(String inputPath, String outputDir) async {

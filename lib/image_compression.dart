@@ -58,6 +58,7 @@ class ImageCompression {
         'pngquant.exe',
         'svgop.exe',
         'jpegoptim.exe',
+        'zopflipng.exe',
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(
