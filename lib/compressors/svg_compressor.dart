@@ -1,5 +1,4 @@
 import 'package:image_compression/file_util.dart';
-import 'package:uuid/uuid.dart';
 import 'package:process_run/shell_run.dart' as shell;
 import 'compressor.dart';
 import 'package:path/path.dart' as p;
@@ -11,7 +10,7 @@ class SvgCompressor extends Compressor {
   Future<dynamic> compress(String inputPath, String outputDir) async {
     var svgCleanerExeFile = p.join(await Compressor.processDir,
         isMacOS ? 'svgcleaner-cli' : 'svgcleaner_win32_0.9.5.exe');
-    var filename = Uuid().v1();
+    var filename = newFileName(inputPath);
     var svgCleanerOutput = p.join(outputDir, '$filename.svg');
 
     var svgGoExeFile =

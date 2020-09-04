@@ -2,7 +2,6 @@ import 'package:image_compression/configs.dart';
 import 'package:image_compression/file_util.dart';
 import 'package:path/path.dart' as p;
 import 'package:process_run/shell_run.dart' as shell;
-import 'package:uuid/uuid.dart';
 import 'compressor.dart';
 
 /// Compressor that compress png image.by using [pngquant](https://pngquant.org/) and [zopfli](https://github.com/google/zopfli)
@@ -13,7 +12,7 @@ class PngCompressor extends Compressor {
   Future<dynamic> compress(String inputPath, String outputDir) async {
     var pngquantExeFile = p.join(
         await Compressor.processDir, isMacOS ? 'pngquant' : 'pngquant.exe');
-    var filename = Uuid().v1();
+    var filename = newFileName(inputPath);
     // copy input to a new file because pngquant working on this file directly
     var pngquantInputFile = p.join(outputDir, '$filename.png');
     await FileUtil.copyFile(inputPath, pngquantInputFile);

@@ -4,7 +4,7 @@ export 'png_compressor.dart';
 export 'svg_compressor.dart';
 export 'other_compressor.dart';
 export 'empty_compressor.dart';
-
+import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -23,4 +23,11 @@ abstract class Compressor {
   }
 
   bool get isMacOS => UniversalPlatform.isMacOS;
+
+  /// Create new file name from current file path
+  String newFileName(String inputPath) {
+    var filename = p.basenameWithoutExtension(inputPath);
+    var now = DateTime.now();
+    return '${filename}_${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}';
+  }
 }
