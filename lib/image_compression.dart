@@ -59,6 +59,7 @@ class ImageCompression {
         'svgop.exe',
         'jpegoptim.exe',
         'zopflipng.exe',
+        'magick.exe',
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(

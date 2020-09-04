@@ -8,7 +8,10 @@ class GifCompressor extends Compressor {
   @override
   Future<dynamic> compress(String inputPath, String outputDir) async {
     var outputFile = p.join(outputDir, '${Uuid().v1()}.png');
-    await run('magick', ['convert', inputPath, outputFile], verbose: true);
+    var exeFile = isMacOS
+        ? 'magick' // from homebrew
+        : p.join(await Compressor.processDir, 'magick.exe');
+    await run(exeFile, ['convert', inputPath, outputFile], verbose: true);
     return outputFile;
   }
 }
