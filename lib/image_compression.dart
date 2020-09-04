@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:image_compression/compressors/compressor.dart';
 import 'package:image_compression/image_types.dart';
 import 'package:image_compression/file_util.dart';
@@ -9,10 +8,7 @@ import 'package:universal_platform/universal_platform.dart';
 
 class ImageCompression {
   ImageCompression._privateConstructore();
-
   static ImageCompression shared = ImageCompression._privateConstructore();
-
-  static const MethodChannel _channel = MethodChannel('image_compression');
 
   final Map<ImageType, Compressor> _compressors = {
     ImageType.gif: GifCompressor(),
@@ -34,6 +30,7 @@ class ImageCompression {
         'pngquant',
         'jpegoptim',
         'svgop',
+        'zopflipng',
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(
@@ -55,11 +52,6 @@ class ImageCompression {
     }
   }
 
-  Future<String> get platformVersion async {
-    final version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
   Future<dynamic> process(
       String inputDir, String fileName, String outputDir) async {
     var file = p.join(inputDir, fileName);
@@ -69,5 +61,6 @@ class ImageCompression {
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
     var output = await compressor?.compress(inputFile, outputDir);
     print('process [$inputFile] with [$compressor] has output: [$output]');
+    return output;
   }
 }
