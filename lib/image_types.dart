@@ -1,3 +1,4 @@
+/// Image file type base on file extension
 enum ImageType {
   gif,
   png,
@@ -28,5 +29,6 @@ extension $ImageType on ImageType {
   };
 
   String get name => $ImageType.string[this];
-  static ImageType fromString(String value) => $ImageType.toEnum[value];
+  static ImageType fromString(String value) =>
+      $ImageType.toEnum[value.toLowerCase()];
 }

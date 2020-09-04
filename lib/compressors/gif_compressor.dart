@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as p;
 import 'compressor.dart';
 
-/// Compressor to convert gif image types into png
+/// Compressor to convert gif image types into png by [Imagemagick](https://imagemagick.org)
 class GifCompressor extends Compressor {
   @override
   Future<dynamic> compress(String inputPath, String outputDir) async {
