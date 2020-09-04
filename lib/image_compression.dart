@@ -54,7 +54,7 @@ class ImageCompression {
 
       // copy binary files into executeable dir
       final binaries = [
-        'svgcleaner_win32_0.9.5.exe',
+        'svgcleaner-cli.exe',
         'pngquant.exe',
         'svgop.exe',
         'jpegoptim.exe',

@@ -9,7 +9,7 @@ class SvgCompressor extends Compressor {
   @override
   Future<dynamic> compress(String inputPath, String outputDir) async {
     var svgCleanerExeFile = p.join(await Compressor.processDir,
-        isMacOS ? 'svgcleaner-cli' : 'svgcleaner_win32_0.9.5.exe');
+        isMacOS ? 'svgcleaner-cli' : 'svgcleaner-cli.exe');
     var filename = newFileName(inputPath);
     var svgCleanerOutput = p.join(outputDir, '$filename.svg');
 
