@@ -56,7 +56,8 @@ class ImageCompression {
       final binaries = [
         'svgcleaner_win32_0.9.5.exe',
         'pngquant.exe',
-        'svgop.exe'
+        'svgop.exe',
+        'jpegoptim.exe',
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(

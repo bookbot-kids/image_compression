@@ -4,7 +4,8 @@ import 'package:image_compression/image_compression.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final testDir = '/working_dir';
+  final testDir = 'working_dir';
+  final outputDir = 'working_dir/output';
 
   setUp(() async {
     // expose current dir for path_provider on test
@@ -22,7 +23,7 @@ void main() {
     await ImageCompression.shared.process(
       testDir,
       'test.gif',
-      '$testDir/output',
+      outputDir,
     );
   });
 
@@ -30,7 +31,7 @@ void main() {
     await ImageCompression.shared.process(
       testDir,
       'test.jpg',
-      '$testDir/output',
+      outputDir,
     );
   });
 
@@ -38,7 +39,7 @@ void main() {
     await ImageCompression.shared.process(
       testDir,
       'test.svg',
-      '$testDir/output',
+      outputDir,
     );
 
     expect(true, true);
@@ -48,7 +49,7 @@ void main() {
     await ImageCompression.shared.process(
       testDir,
       'test.png',
-      '$testDir/output',
+      outputDir,
     );
 
     expect(true, true);

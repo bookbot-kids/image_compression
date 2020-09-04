@@ -5,8 +5,6 @@ export 'svg_compressor.dart';
 export 'other_compressor.dart';
 export 'empty_compressor.dart';
 
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:universal_io/io.dart';
 import 'package:universal_platform/universal_platform.dart';
 
