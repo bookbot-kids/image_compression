@@ -28,23 +28,28 @@ class ImageCompression {
       // install imagemagick
       //await run('brew', ['install', 'imagemagick'], verbose: true);
 
-      // copy svgcleaner into executeable dir
-      await FileUtil.copyFile('binaries/svgcleaner-cli',
-          p.join(await Compressor.processDir, 'svgcleaner-cli'));
-
-      // copy pngquant into executeable dir
-      await FileUtil.copyFile(
-          'binaries/pngquant', p.join(await Compressor.processDir, 'pngquant'));
+      // copy binary files into executeable dir
+      final binaries = [
+        'svgcleaner-cli',
+        'pngquant',
+        'jpegoptim',
+      ];
+      for (var binary in binaries) {
+        await FileUtil.copyFile(
+            'binaries/$binary', p.join(await Compressor.processDir, binary));
+      }
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
 
-      // copy svgcleaner into executeable dir
-      await FileUtil.copyFile('binaries/svgcleaner_win32_0.9.5.exe',
-          p.join(await Compressor.processDir, 'svgcleaner_win32_0.9.5.exe'));
-
-      // copy pngquant into executeable dir
-      await FileUtil.copyFile('binaries/pngquant.exe',
-          p.join(await Compressor.processDir, 'pngquant.exe'));
+      // copy binary files into executeable dir
+      final binaries = [
+        'svgcleaner_win32_0.9.5.exe',
+        'pngquant.exe',
+      ];
+      for (var binary in binaries) {
+        await FileUtil.copyFile(
+            'binaries/$binary', p.join(await Compressor.processDir, binary));
+      }
     }
   }
 
