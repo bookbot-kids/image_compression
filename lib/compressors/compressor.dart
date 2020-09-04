@@ -16,8 +16,7 @@ abstract class Compressor {
 
   /// Get working directory
   static Future<String> get processDir async {
-    var tempDir = await getTemporaryDirectory();
-    final dir = Directory(p.join(tempDir.path, 'image_compression'));
+    final dir = Directory('image_compression');
     if (!(await dir.exists())) {
       await dir.create(recursive: true);
     }

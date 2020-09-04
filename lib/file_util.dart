@@ -55,4 +55,11 @@ class FileUtil {
     var file = File(from);
     await file.copy(to);
   }
+
+  /// Delete a file
+  static Future<void> delete(String path) async {
+    if (await File(path).exists()) {
+      await File(path).delete();
+    }
+  }
 }

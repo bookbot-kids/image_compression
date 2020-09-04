@@ -33,6 +33,7 @@ class ImageCompression {
         'svgcleaner-cli',
         'pngquant',
         'jpegoptim',
+        'svgop',
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(
@@ -45,6 +46,7 @@ class ImageCompression {
       final binaries = [
         'svgcleaner_win32_0.9.5.exe',
         'pngquant.exe',
+        'svgop.exe'
       ];
       for (var binary in binaries) {
         await FileUtil.copyFile(
@@ -65,7 +67,7 @@ class ImageCompression {
     var inputFile = await FileUtil.resizeIfNeeded(inputDir, file);
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
-    print('process [$inputFile] with [$compressor]');
-    return await compressor?.compress(inputFile, outputDir);
+    var output = await compressor?.compress(inputFile, outputDir);
+    print('process [$inputFile] with [$compressor] has output: [$output]');
   }
 }

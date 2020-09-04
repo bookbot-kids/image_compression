@@ -18,6 +18,14 @@ void main() {
 
   tearDown(() {});
 
+  test('test gif', () async {
+    await ImageCompression.shared.process(
+      testDir,
+      'test.gif',
+      '$testDir/output',
+    );
+  });
+
   test('test jpg', () async {
     await ImageCompression.shared.process(
       testDir,
