@@ -4,6 +4,7 @@ import 'package:image_compression/compressors/compressor.dart';
 import 'package:image_compression/image_types.dart';
 import 'package:image_compression/file_util.dart';
 import 'package:path/path.dart' as p;
+import 'package:process_run/process_run.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 /// Image compression tool.
@@ -32,10 +33,12 @@ class ImageCompression {
     ImageType.eps: EmptyCompressor(),
   };
 
+  /// Setup the executable files before running, copy all files into an execute directory
+  /// `imagemagick` in macOS is come from homebrew
   Future<void> config() async {
     if (UniversalPlatform.isMacOS) {
       // install imagemagick
-      //await run('brew', ['install', 'imagemagick'], verbose: true);
+      await run('brew', ['install', 'imagemagick'], verbose: true);
 
       // copy binary files into executeable dir
       final binaries = [
