@@ -76,9 +76,12 @@ class ImageCompression {
       String inputDir, String fileName, String outputDir) async {
     var file = p.join(inputDir, fileName);
     var fileExtension = p.extension(file).toLowerCase();
+    // resize in case image larger than [Configs.MaxSize]
     var inputFile = await FileUtil.resizeIfNeeded(inputDir, file);
+    // get the compressor base on file extension
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
+    // process and get the output file, with gif, the output is a list of png files
     var output = await compressor?.compress(inputFile, outputDir);
     print('process [$inputFile] with [$compressor] has output: [$output]');
     return output;
