@@ -31,6 +31,7 @@ class ImageCompression {
     ImageType.png: PngCompressor(),
     ImageType.ai: EmptyCompressor(),
     ImageType.eps: EmptyCompressor(),
+    ImageType.pdf: EmptyCompressor(),
   };
 
   /// Setup the executable files before running, copy all files into an execute directory

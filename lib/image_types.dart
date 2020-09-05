@@ -6,6 +6,7 @@ enum ImageType {
   svg,
   ai,
   eps,
+  pdf,
 }
 
 extension $ImageType on ImageType {
@@ -16,6 +17,7 @@ extension $ImageType on ImageType {
     ImageType.svg: '.svg',
     ImageType.ai: '.ai',
     ImageType.eps: '.eps',
+    ImageType.pdf: '.pdf',
   };
 
   static final toEnum = {
@@ -26,6 +28,7 @@ extension $ImageType on ImageType {
     '.jpeg': ImageType.jpg,
     '.ai': ImageType.ai,
     '.eps': ImageType.eps,
+    '.pdf': ImageType.pdf,
   };
 
   String get name => $ImageType.string[this];
