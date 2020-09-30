@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_compression/configs.dart';
 import 'package:universal_io/io.dart';
@@ -54,6 +55,18 @@ class FileUtil {
 
     var file = File(from);
     await file.copy(to);
+  }
+
+  /// Copy file from asset, ignore if exist
+  static Future<void> copyAssetFile(String asssetPath, String to) async {
+    var destFile = File(to);
+    if (await destFile.exists()) {
+      return;
+    }
+
+    final data = await rootBundle.load(asssetPath);
+    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    await destFile.writeAsBytes(bytes);
   }
 
   /// Delete a file

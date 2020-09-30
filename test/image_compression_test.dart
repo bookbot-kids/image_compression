@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_compression/image_compression.dart';
+import 'package:universal_io/io.dart';
+import 'package:path/path.dart' as p;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +16,28 @@ void main() {
       return '.';
     });
 
-    await ImageCompression.shared.config();
+    await ImageCompression.shared.init('');
   });
 
   tearDown(() {});
+
+  test('test folder', () async {
+    var dir = Directory(testDir);
+
+    var files = dir.listSync();
+    for (var file in files) {
+      if (!File(file.path).existsSync() || file.path.contains('.DS_Store')) {
+        continue;
+      }
+
+      var fileName = p.basename(file.path);
+      await ImageCompression.shared.process(
+        testDir,
+        fileName,
+        outputDir,
+      );
+    }
+  });
 
   test('test gif', () async {
     await ImageCompression.shared.process(

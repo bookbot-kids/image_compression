@@ -43,7 +43,18 @@ flutter:
 
   # To add assets to your plugin package, add an assets section, like this:
   assets:
-    - binaries/
+    - packages/image_compression/binaries/ImageMagick.exe
+    - packages/image_compression/binaries/jpegoptim
+    - packages/image_compression/binaries/jpegoptim.exe
+    - packages/image_compression/binaries/magick.exe
+    - packages/image_compression/binaries/pngquant
+    - packages/image_compression/binaries/pngquant.exe
+    - packages/image_compression/binaries/svgcleaner-cli
+    - packages/image_compression/binaries/svgcleaner-cli.exe
+    - packages/image_compression/binaries/svgop
+    - packages/image_compression/binaries/svgop.exe
+    - packages/image_compression/binaries/zopflipng
+    - packages/image_compression/binaries/zopflipng.exe
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

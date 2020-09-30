@@ -34,11 +34,14 @@ class ImageCompression {
     ImageType.pdf: EmptyCompressor(),
   };
 
+  String workingDir;
+
   /// Setup the executable files before running, copy all files into an execute directory
   /// `imagemagick` in macOS is come from homebrew
-  Future<void> config() async {
+  Future<void> init(String dir) async {
+    workingDir = dir;
     if (UniversalPlatform.isMacOS) {
-       // install imagemagick if not available
+      // install imagemagick if not available
       var info =
           (await run('brew', ['info', 'imagemagick'], verbose: true)).stdout;
       if (info.contains('No available') || info.contains('Not installed')) {
@@ -54,8 +57,9 @@ class ImageCompression {
         'zopflipng',
       ];
       for (var binary in binaries) {
-        await FileUtil.copyFile(
-            'binaries/$binary', p.join(await Compressor.processDir, binary));
+        await FileUtil.copyAssetFile(
+            'packages/image_compression/binaries/$binary',
+            p.join(await Compressor.processDir, binary));
       }
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
@@ -70,8 +74,9 @@ class ImageCompression {
         'magick.exe',
       ];
       for (var binary in binaries) {
-        await FileUtil.copyFile(
-            'binaries/$binary', p.join(await Compressor.processDir, binary));
+        await FileUtil.copyAssetFile(
+            'packages/image_compression/binaries/$binary',
+            p.join(await Compressor.processDir, binary));
       }
     }
   }

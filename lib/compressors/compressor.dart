@@ -4,6 +4,7 @@ export 'png_compressor.dart';
 export 'svg_compressor.dart';
 export 'other_compressor.dart';
 export 'empty_compressor.dart';
+import 'package:image_compression/image_compression.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -14,7 +15,8 @@ abstract class Compressor {
 
   /// Get working directory
   static Future<String> get processDir async {
-    final dir = Directory('image_compression');
+    final dir = Directory(
+        p.join(ImageCompression.shared.workingDir, 'image_compression'));
     if (!(await dir.exists())) {
       await dir.create(recursive: true);
     }
