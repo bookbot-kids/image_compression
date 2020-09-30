@@ -2,12 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_compression/image_compression.dart';
 import 'package:universal_io/io.dart';
-import 'package:path/path.dart' as p;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final testDir = 'working_dir';
-  final outputDir = 'working_dir/output';
 
   setUp(() async {
     // expose current dir for path_provider on test
@@ -30,36 +28,27 @@ void main() {
         continue;
       }
 
-      var fileName = p.basename(file.path);
       await ImageCompression.shared.process(
-        testDir,
-        fileName,
-        outputDir,
+        file.path,
       );
     }
   });
 
   test('test gif', () async {
     await ImageCompression.shared.process(
-      testDir,
-      'test.gif',
-      outputDir,
+      '$testDir/test.gif',
     );
   });
 
   test('test jpg', () async {
     await ImageCompression.shared.process(
-      testDir,
-      'test.jpg',
-      outputDir,
+      '$testDir/test.jpg',
     );
   });
 
   test('test svg', () async {
     await ImageCompression.shared.process(
-      testDir,
-      'test.svg',
-      outputDir,
+      '$testDir/test.svg',
     );
 
     expect(true, true);
@@ -67,9 +56,7 @@ void main() {
 
   test('test png', () async {
     await ImageCompression.shared.process(
-      testDir,
-      'test.png',
-      outputDir,
+      '$testDir/test.png',
     );
 
     expect(true, true);

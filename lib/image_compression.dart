@@ -83,17 +83,16 @@ class ImageCompression {
   }
 
   /// compress an image and return the output file
-  Future<dynamic> process(
-      String inputDir, String fileName, String outputDir) async {
-    var file = p.join(inputDir, fileName);
+  Future<dynamic> process(String file) async {
+    var dir = await Compressor.processDir;
     var fileExtension = p.extension(file).toLowerCase();
     // resize in case image larger than [Configs.MaxSize]
-    var inputFile = await FileUtil.resizeIfNeeded(inputDir, file);
+    var inputFile = await FileUtil.resizeIfNeeded(dir, file);
     // get the compressor base on file extension
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
     // process and get the output file, with gif, the output is a list of png files
-    var output = await compressor?.compress(inputFile, outputDir);
+    var output = await compressor?.compress(inputFile, dir);
     print('process [$inputFile] with [$compressor] has output: [$output]');
     return output;
   }

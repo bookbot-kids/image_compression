@@ -13,7 +13,7 @@ class SvgCompressor extends Compressor {
     var svgCleanerOutput = p.join(outputDir, '$filename.svg');
     await shell.run('''
         # run svg cleaner
-        $svgCleanerExeFile "$inputPath" "$svgCleanerOutput"
+        "$svgCleanerExeFile" "$inputPath" "$svgCleanerOutput"
       ''', throwOnError: false);
 
     return svgCleanerOutput;

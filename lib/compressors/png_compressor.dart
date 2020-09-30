@@ -27,9 +27,9 @@ class PngCompressor extends Compressor {
     await shell.run(
       '''
       # run pngquant
-      $pngquantExeFile --ext "$pngquantSuffix" --quality ${Configs.PngQuality}-${Configs.PngQuality} "$pngquantInputFile"
+      "$pngquantExeFile" --ext "$pngquantSuffix" --quality ${Configs.PngQuality}-${Configs.PngQuality} "$pngquantInputFile"
       # then run zopfli
-      $zopfliExeFile "$pngquantOutputFile" "$output"
+      "$zopfliExeFile" "$pngquantOutputFile" "$output"
 
       ''',
       throwOnError: false,

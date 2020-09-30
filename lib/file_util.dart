@@ -11,7 +11,7 @@ class FileUtil {
   /// Resize image if the image size > maxSize. Only resize JPEG, PNG image
   /// Return original path if size <= maxSize, otherwise return new path
   static Future<String> resizeIfNeeded(
-    String inputDir,
+    String dir,
     String imageFile,
   ) async {
     var fileExtension = p.extension(imageFile).toLowerCase();
@@ -31,8 +31,7 @@ class FileUtil {
       final heightRatio = Configs.MaxSize / decodedImage.height;
       final ratio = min(widthRatio, heightRatio);
       var originImage = img.decodeImage(bytes);
-      final resizedPath =
-          p.join(inputDir, '${fileName}_resized${fileExtension}');
+      final resizedPath = p.join(dir, '${fileName}_resized${fileExtension}');
       final targetWidth = (decodedImage.width * ratio).toInt();
       final targetHeight = (decodedImage.height * ratio).toInt();
       print('resize to $targetWidth, $targetHeight at path $resizedPath');
