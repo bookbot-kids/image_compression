@@ -57,9 +57,10 @@ class ImageCompression {
         'zopflipng',
       ];
       for (var binary in binaries) {
+        var dest = p.join(await Compressor.processDir, binary);
         await FileUtil.copyAssetFile(
-            'packages/image_compression/binaries/$binary',
-            p.join(await Compressor.processDir, binary));
+            'packages/image_compression/binaries/$binary', dest);
+        await run('chmod', ['+x', dest]);
       }
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
