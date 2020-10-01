@@ -30,6 +30,7 @@ void main() {
 
       await ImageCompression.shared.process(
         file.path,
+        '',
       );
     }
   });
@@ -37,18 +38,21 @@ void main() {
   test('test gif', () async {
     await ImageCompression.shared.process(
       '$testDir/test.gif',
+      null,
     );
   });
 
   test('test jpg', () async {
     await ImageCompression.shared.process(
       '$testDir/test.jpg',
+      '$testDir/test_compressed.jpg',
     );
   });
 
   test('test svg', () async {
     await ImageCompression.shared.process(
       '$testDir/test.svg',
+      '$testDir/test_compressed.svg',
     );
 
     expect(true, true);
@@ -57,6 +61,7 @@ void main() {
   test('test png', () async {
     await ImageCompression.shared.process(
       '$testDir/test.png',
+      '$testDir/test_compressed.png',
     );
 
     expect(true, true);
