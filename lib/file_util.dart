@@ -15,11 +15,11 @@ class FileUtil {
     String imageFile,
   ) async {
     var fileExtension = p.extension(imageFile).toLowerCase();
-    if (!['jpg', 'png', 'jpeg'].contains(fileExtension)) {
+    if (!['.jpg', '.png', '.jpeg'].contains(fileExtension)) {
       return imageFile;
     }
 
-    var isPng = fileExtension == 'png';
+    var isPng = fileExtension == '.png';
     var file = File(imageFile);
     var fileName = p.basenameWithoutExtension(imageFile);
     var bytes = file.readAsBytesSync();
