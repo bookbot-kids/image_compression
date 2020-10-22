@@ -83,11 +83,12 @@ class ImageCompression {
   }
 
   /// compress an image and return the output file
-  Future<dynamic> process(String inputFile, String outputFile) async {
+  Future<dynamic> process(
+      String inputFile, String resizedFile, String outputFile) async {
     var dir = await Compressor.processDir;
     var fileExtension = p.extension(inputFile).toLowerCase();
     // resize in case image larger than [Configs.MaxSize]
-    var file = await FileUtil.resizeIfNeeded(dir, inputFile);
+    var file = await FileUtil.copyOrResize(inputFile, resizedFile);
     // get the compressor base on file extension
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
