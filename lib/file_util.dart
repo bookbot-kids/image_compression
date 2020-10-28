@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_compression/configs.dart';
+import 'package:image_compression/image_compression.dart';
 import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 import 'package:image/image.dart' as img;
@@ -25,10 +25,10 @@ class FileUtil {
     var bytes = file.readAsBytesSync();
     var decodedImage = await decodeImageFromList(bytes);
     print('image size ${decodedImage.width}, ${decodedImage.height}');
-    if (decodedImage.width > Configs.MaxSize ||
-        decodedImage.height > Configs.MaxSize) {
-      final widthRatio = Configs.MaxSize / decodedImage.width;
-      final heightRatio = Configs.MaxSize / decodedImage.height;
+    if (decodedImage.width > ImageCompression.shared.maxSize ||
+        decodedImage.height > ImageCompression.shared.maxSize) {
+      final widthRatio = ImageCompression.shared.maxSize / decodedImage.width;
+      final heightRatio = ImageCompression.shared.maxSize / decodedImage.height;
       final ratio = min(widthRatio, heightRatio);
       var originImage = img.decodeImage(bytes);
       final targetWidth = (decodedImage.width * ratio).toInt();

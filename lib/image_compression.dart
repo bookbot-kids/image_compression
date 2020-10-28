@@ -35,10 +35,22 @@ class ImageCompression {
   };
 
   String workingDir;
+  double maxSize;
+  int pngQuality;
+  int jpgQuality;
 
   /// Setup the executable files before running, copy all files into an execute directory
   /// `imagemagick` in macOS is come from homebrew
-  Future<void> init(String dir) async {
+  Future<void> init(
+    String dir, {
+    double maxSize = 2048.0,
+    int pngQuality = 40,
+    int jpgQuality = 50,
+  }) async {
+    this.maxSize = maxSize;
+    this.pngQuality = pngQuality;
+    this.jpgQuality = jpgQuality;
+
     workingDir = dir;
     if (UniversalPlatform.isMacOS) {
       // install imagemagick if not available

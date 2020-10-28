@@ -1,5 +1,5 @@
-import 'package:image_compression/configs.dart';
 import 'package:image_compression/file_util.dart';
+import 'package:image_compression/image_compression.dart';
 import 'package:path/path.dart' as p;
 import 'package:process_run/shell_run.dart' as shell;
 import 'compressor.dart';
@@ -27,7 +27,7 @@ class PngCompressor extends Compressor {
     await shell.run(
       '''
       # run pngquant
-      "$pngquantExeFile" --ext "$pngquantSuffix" --quality ${Configs.PngQuality}-${Configs.PngQuality} "$pngquantInputFile"
+      "$pngquantExeFile" --ext "$pngquantSuffix" --quality ${ImageCompression.shared.pngQuality}-${ImageCompression.shared.pngQuality} "$pngquantInputFile"
       # then run zopfli
       "$zopfliExeFile" "$pngquantOutputFile" "$output"
 
