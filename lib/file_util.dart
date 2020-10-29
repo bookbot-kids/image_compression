@@ -13,6 +13,7 @@ class FileUtil {
   static Future<String> copyOrResize(
     String inputFile,
     String outputFile,
+    double maxSize,
   ) async {
     var fileExtension = p.extension(inputFile).toLowerCase();
     if (!['.jpg', '.png', '.jpeg'].contains(fileExtension)) {
@@ -24,16 +25,17 @@ class FileUtil {
     var file = File(inputFile);
     var bytes = file.readAsBytesSync();
     var decodedImage = await decodeImageFromList(bytes);
-    print('image size ${decodedImage.width}, ${decodedImage.height}');
-    if (decodedImage.width > ImageCompression.shared.maxSize ||
-        decodedImage.height > ImageCompression.shared.maxSize) {
-      final widthRatio = ImageCompression.shared.maxSize / decodedImage.width;
-      final heightRatio = ImageCompression.shared.maxSize / decodedImage.height;
+    ImageCompression.shared.logger
+        ?.i('image size ${decodedImage.width}, ${decodedImage.height}');
+    if (decodedImage.width > maxSize || decodedImage.height > maxSize) {
+      final widthRatio = maxSize / decodedImage.width;
+      final heightRatio = maxSize / decodedImage.height;
       final ratio = min(widthRatio, heightRatio);
       var originImage = img.decodeImage(bytes);
       final targetWidth = (decodedImage.width * ratio).toInt();
       final targetHeight = (decodedImage.height * ratio).toInt();
-      print('resize to $targetWidth, $targetHeight at path $outputFile');
+      ImageCompression.shared.logger
+          ?.i('resize to $targetWidth, $targetHeight at path $outputFile');
       final resizedImage =
           img.copyResize(originImage, width: targetWidth, height: targetHeight);
       File(outputFile)

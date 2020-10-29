@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_compression/image_compression.dart';
+import 'package:logger/logger.dart';
 import 'package:universal_io/io.dart';
 
 void main() {
@@ -14,7 +15,7 @@ void main() {
       return '.';
     });
 
-    await ImageCompression.shared.init('');
+    await ImageCompression.shared.init('', Logger());
   });
 
   tearDown(() {});
