@@ -8,6 +8,8 @@ import 'package:path/path.dart' as p;
 import 'package:process_run/process_run.dart';
 import 'package:universal_platform/universal_platform.dart';
 
+export 'file_util.dart';
+
 /// Image compression tool.
 /// If image larger than [Configs.MaxSize], then it's resized before compressioning
 ///
@@ -57,11 +59,16 @@ class ImageCompression {
 
     workingDir = dir;
     if (UniversalPlatform.isMacOS) {
-      // install imagemagick if not available
-      var info =
-          (await run('brew', ['info', 'imagemagick'], verbose: true)).stdout;
-      if (info.contains('No available') || info.contains('Not installed')) {
-        await run('brew', ['install', 'imagemagick'], verbose: true);
+      try {
+        // install imagemagick if not available
+        var info =
+            (await run('brew', ['info', 'imagemagick'], verbose: true)).stdout;
+        if (info.contains('No available') || info.contains('Not installed')) {
+          await run('brew', ['install', 'imagemagick'], verbose: true);
+        }
+      } catch (e, stacktrace) {
+        // don't need to throw exception here
+        logger?.e('install imagemagick error $e', e, stacktrace);
       }
 
       // copy binary files into executeable dir
@@ -107,11 +114,13 @@ class ImageCompression {
 
   /// compress an image and return the output file
   Future<dynamic> process(
-      String inputFile, String resizedFile, String outputFile) async {
+      String inputFile, String resizedFile, String outputFile,
+      {double size}) async {
     var dir = await Compressor.processDir;
     var fileExtension = p.extension(inputFile).toLowerCase();
     // resize in case image larger than [Configs.MaxSize]
-    var file = await FileUtil.copyOrResize(inputFile, resizedFile, maxSize);
+    var file =
+        await FileUtil.copyOrResize(inputFile, resizedFile, size ?? maxSize);
     // get the compressor base on file extension
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();

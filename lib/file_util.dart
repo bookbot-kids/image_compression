@@ -6,6 +6,7 @@ import 'package:image_compression/image_compression.dart';
 import 'package:universal_io/io.dart';
 import 'package:path/path.dart' as p;
 import 'package:image/image.dart' as img;
+import 'dart:ui' as ui;
 
 class FileUtil {
   /// Resize image if the image size > maxSize. Only resize JPEG, PNG image
@@ -46,6 +47,17 @@ class FileUtil {
 
     await copyFile(inputFile, outputFile);
     return outputFile;
+  }
+
+  static Future<ui.Image> readImage(String path) async {
+    var file = File(path);
+    var bytes = file.readAsBytesSync();
+    var decodedImage = await decodeImageFromList(bytes);
+    return decodedImage;
+  }
+
+  static Future<String> fileExtension(String path) async {
+    return p.extension(path).toLowerCase();
   }
 
   /// Copy file, ignore if exist
