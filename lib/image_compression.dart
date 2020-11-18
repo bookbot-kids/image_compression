@@ -51,6 +51,8 @@ class ImageCompression {
     double maxSize = 2048.0,
     int pngQuality = 40,
     int jpgQuality = 50,
+    bool runBrew = true,
+    bool runChmod = true,
   }) async {
     this.maxSize = maxSize;
     this.pngQuality = pngQuality;
@@ -59,16 +61,18 @@ class ImageCompression {
 
     workingDir = dir;
     if (UniversalPlatform.isMacOS) {
-      try {
-        // install imagemagick if not available
-        var info =
-            (await run('brew', ['info', 'imagemagick'], verbose: true)).stdout;
-        if (info.contains('No available') || info.contains('Not installed')) {
-          await run('brew', ['install', 'imagemagick'], verbose: true);
+      if (runBrew) {
+        try {
+          // install imagemagick if not available
+          var info = (await run('brew', ['info', 'imagemagick'], verbose: true))
+              .stdout;
+          if (info.contains('No available') || info.contains('Not installed')) {
+            await run('brew', ['install', 'imagemagick'], verbose: true);
+          }
+        } catch (e, stacktrace) {
+          // don't need to throw exception here
+          logger?.e('install imagemagick error $e', e, stacktrace);
         }
-      } catch (e, stacktrace) {
-        // don't need to throw exception here
-        logger?.e('install imagemagick error $e', e, stacktrace);
       }
 
       // copy binary files into executeable dir
@@ -83,7 +87,9 @@ class ImageCompression {
         var dest = p.join(await Compressor.processDir, binary);
         await FileUtil.copyAssetFile(
             'packages/image_compression/binaries/$binary', dest);
-        await run('chmod', ['+x', dest]);
+        if (runChmod) {
+          await run('chmod', ['+x', dest]);
+        }
       }
     } else if (UniversalPlatform.isWindows) {
       // copy execute into current dir
