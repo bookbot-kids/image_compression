@@ -51,7 +51,6 @@ class ImageCompression {
     double maxSize = 2048.0,
     int pngQuality = 40,
     int jpgQuality = 50,
-    bool runBrew = true,
     bool runChmod = true,
   }) async {
     this.maxSize = maxSize;
@@ -61,20 +60,6 @@ class ImageCompression {
 
     workingDir = dir;
     if (UniversalPlatform.isMacOS) {
-      if (runBrew) {
-        try {
-          // install imagemagick if not available
-          var info = (await run('brew', ['info', 'imagemagick'], verbose: true))
-              .stdout;
-          if (info.contains('No available') || info.contains('Not installed')) {
-            await run('brew', ['install', 'imagemagick'], verbose: true);
-          }
-        } catch (e, stacktrace) {
-          // don't need to throw exception here
-          logger?.e('install imagemagick error $e', e, stacktrace);
-        }
-      }
-
       // copy binary files into executeable dir
       final binaries = [
         'svgcleaner-cli',
@@ -82,6 +67,7 @@ class ImageCompression {
         'jpegoptim',
         'svgop',
         'zopflipng',
+        'magick'
       ];
       for (var binary in binaries) {
         var dest = p.join(await Compressor.processDir, binary);

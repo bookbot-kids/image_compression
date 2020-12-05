@@ -51,6 +51,7 @@ flutter:
     - packages/image_compression/binaries/svgop.exe
     - packages/image_compression/binaries/zopflipng
     - packages/image_compression/binaries/zopflipng.exe
+    - packages/image_compression/binaries/magick
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

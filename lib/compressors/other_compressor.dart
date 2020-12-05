@@ -8,7 +8,7 @@ class OtherCompressor extends Compressor {
   Future<dynamic> compress(String inputPath, String outputPath) async {
     var outputFile = p.join(outputPath, '${newFileName(inputPath)}.jpg');
     var exeFile = isMacOS
-        ? 'magick' // from homebrew
+        ? p.join(await Compressor.processDir, 'magick')
         : p.join(await Compressor.processDir, 'magick.exe');
     await run(exeFile, ['convert', inputPath, outputFile], verbose: true);
     return outputFile;
