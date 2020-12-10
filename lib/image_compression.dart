@@ -74,7 +74,11 @@ class ImageCompression {
         await FileUtil.copyAssetFile(
             'packages/image_compression/binaries/$binary', dest);
         if (runChmod) {
-          await run('chmod', ['+x', dest]);
+          try {
+            await run('chmod', ['+x', dest]);
+          } catch (e, stacktrace) {
+            logger?.w('chmod error $e', e, stacktrace);
+          }
         }
       }
     } else if (UniversalPlatform.isWindows) {
