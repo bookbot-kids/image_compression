@@ -10,7 +10,8 @@ class OtherCompressor extends Compressor {
     var exeFile = isMacOS
         ? p.join(await Compressor.processDir, 'magick')
         : p.join(await Compressor.processDir, 'magick.exe');
-    await run(exeFile, ['convert', inputPath, outputFile], verbose: true);
+    await runExecutableArguments(exeFile, ['convert', inputPath, outputFile],
+        verbose: true);
     return outputFile;
   }
 }

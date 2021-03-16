@@ -13,7 +13,8 @@ class GifCompressor extends Compressor {
     var exeFile = isMacOS
         ? p.join(await Compressor.processDir, 'magick')
         : p.join(await Compressor.processDir, 'magick.exe');
-    await run(exeFile, ['convert', inputPath, outputFile], verbose: true);
+    await runExecutableArguments(exeFile, ['convert', inputPath, outputFile],
+        verbose: true);
     // the output of magick git to png is the list of png files: fileName-01.png, fileName-02.png...
     // so we will get all files that match the file name pattern
     var dir = Directory(outputDir);

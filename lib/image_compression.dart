@@ -75,8 +75,10 @@ class ImageCompression {
             'packages/image_compression/binaries/$binary', dest);
         if (runChmod) {
           try {
-            await run('chmod', ['+x', dest]);
+            await runExecutableArguments('chmod', ['+x', dest]);
           } catch (e, stacktrace) {
+            print(e);
+            print(stacktrace);
             logger?.w('chmod error $e', e, stacktrace);
           }
         }

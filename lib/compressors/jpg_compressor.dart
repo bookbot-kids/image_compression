@@ -12,7 +12,8 @@ class JpgCompressor extends Compressor {
         await Compressor.processDir, isMacOS ? 'jpegoptim' : 'jpegoptim.exe');
     var outputFile = p.join(outputDir, '${newFileName(inputPath)}.jpg');
     await FileUtil.copyFile(inputPath, outputFile);
-    await run(exeFile, ['-m ${ImageCompression.shared.jpgQuality}', outputFile],
+    await runExecutableArguments(
+        exeFile, ['-m ${ImageCompression.shared.jpgQuality}', outputFile],
         verbose: true);
     return outputFile;
   }
