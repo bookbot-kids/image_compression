@@ -32,7 +32,7 @@ class FileUtil {
       final widthRatio = maxSize / decodedImage.width;
       final heightRatio = maxSize / decodedImage.height;
       final ratio = min(widthRatio, heightRatio);
-      var originImage = img.decodeImage(bytes);
+      var originImage = img.decodeImage(bytes)!;
       final targetWidth = (decodedImage.width * ratio).toInt();
       final targetHeight = (decodedImage.height * ratio).toInt();
       ImageCompression.shared.logger

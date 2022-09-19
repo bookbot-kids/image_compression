@@ -1,4 +1,3 @@
-import 'package:image_compression/file_util.dart';
 import 'package:image_compression/image_compression.dart';
 import 'package:process_run/process_run.dart';
 import 'package:path/path.dart' as p;

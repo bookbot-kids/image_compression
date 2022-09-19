@@ -31,7 +31,7 @@ extension $ImageType on ImageType {
     '.pdf': ImageType.pdf,
   };
 
-  String get name => $ImageType.string[this];
-  static ImageType fromString(String value) =>
+  String? get name => $ImageType.string[this];
+  static ImageType? fromString(String value) =>
       $ImageType.toEnum[value.toLowerCase()];
 }

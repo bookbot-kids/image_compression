@@ -37,11 +37,11 @@ class ImageCompression {
     ImageType.pdf: EmptyCompressor(),
   };
 
-  String workingDir;
-  double maxSize;
-  int pngQuality;
-  int jpgQuality;
-  Logger logger;
+  late String workingDir;
+  double maxSize = 2048.0;
+  int? pngQuality;
+  int? jpgQuality;
+  Logger? logger;
 
   /// Setup the executable files before running, copy all files into an execute directory
   /// `imagemagick` in macOS is come from homebrew
@@ -79,7 +79,7 @@ class ImageCompression {
           } catch (e, stacktrace) {
             print(e);
             print(stacktrace);
-            logger?.w('chmod error $e', e, stacktrace);
+            logger.w('chmod error $e', e, stacktrace);
           }
         }
       }
@@ -112,8 +112,8 @@ class ImageCompression {
 
   /// compress an image and return the output file
   Future<dynamic> process(
-      String inputFile, String resizedFile, String outputFile,
-      {double size}) async {
+      String inputFile, String resizedFile, String? outputFile,
+      {double? size}) async {
     var dir = await Compressor.processDir;
     var fileExtension = p.extension(inputFile).toLowerCase();
     // resize in case image larger than [Configs.MaxSize]
@@ -123,7 +123,7 @@ class ImageCompression {
     var compressor =
         _compressors[$ImageType.fromString(fileExtension)] ?? OtherCompressor();
     // process and get the output file, with gif, the output is a list of png files
-    var result = await compressor?.compress(file, dir);
+    var result = await compressor.compress(file, dir);
     logger?.i('process [$inputFile] with [$compressor] has output: [$result]');
     if (result is String && outputFile != null) {
       // move to output
