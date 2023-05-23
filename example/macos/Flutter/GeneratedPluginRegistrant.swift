@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import image_compression
-import path_provider_macos
+import path_provider_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   ImageCompressionPlugin.register(with: registry.registrar(forPlugin: "ImageCompressionPlugin"))
