@@ -79,7 +79,7 @@ class ImageCompression {
           } catch (e, stacktrace) {
             print(e);
             print(stacktrace);
-            logger.w('chmod error $e', e, stacktrace);
+            logger.w('chmod error $e', error: e, stackTrace: stacktrace);
           }
         }
       }
